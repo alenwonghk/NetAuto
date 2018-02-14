@@ -1,2 +1,4 @@
 # NetAuto
-The first file on this repository
+The first file on this repository 
+adding the second line after the first commit
+
