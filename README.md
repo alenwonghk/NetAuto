@@ -2,5 +2,4 @@
 The first file on this repository 
 adding the second line after the first commit
 
-Adding a statement by User A
-Adding a statement by User C
+User A add something
