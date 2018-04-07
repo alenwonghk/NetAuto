@@ -1,0 +1,6 @@
+r1.lab.esxi ansible_ssh_common_args="-o KexAlgorithms=diffie-hellman-group14-sha1"
+r10-inet.lab.esxi ansible_ssh_common_args="-o KexAlgorithms=diffie-hellman-group14-sha1"
+
+[all:vars]
+ansible_user=cisco
+ansible_ssh_pass=cisco
