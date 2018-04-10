@@ -8,10 +8,20 @@ interfaces
 ip addresses
 
 
-ansible_sysname
-ansible_net_serialnum
-ansible_net_version
-ansible_sysuptime
-ansible_net_memfree_mb
-ansible_net_memtotal_mb
-ansible_all_ipv4_addresses
+facts['ansible_sysname']
+facts['ansible_net_serialnum']  <- no serial number
+facts['ansible_net_version']
+facts['ansible_sysuptime']
+facts['ansible_net_memfree_mb']
+facts['ansible_net_memtotal_mb']
+facts['ansible_all_ipv4_addresses']
+
+
+
+{{facts.ansible_sysname}}
+{{facts.ansible_net_serialnum}}
+{{facts.ansible_net_version}}
+{{facts.ansible_sysuptime}}
+{{facts.ansible_net_memfree_mb}}
+{{facts.ansible_net_memtotal_mb}}
+{{facts.ansible_all_ipv4_addresses}}
