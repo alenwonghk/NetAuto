@@ -1,10 +1,12 @@
 Information for R01
-Uptime:         148654
-IPv4 addresses: 
-[u'172.16.0.31']
+Uptime:         154980
+IPv4 addresses:
+100.0.0.1
+172.16.0.31
 
 Information for R10-INET01
-Uptime:         136237
-IPv4 addresses: 
-[u'172.16.0.40']
+Uptime:         152485
+IPv4 addresses:
+100.0.0.2
+172.16.0.40
 

@@ -1,7 +1,9 @@
 {% for host,facts in allhosts|dictsort %}
 Information for {{facts['ansible_sysname']}}
 Uptime:         {{facts['ansible_sysuptime']}}
-IPv4 addresses: 
-{{facts['ansible_all_ipv4_addresses']}}
+IPv4 addresses:
+{% for line in facts['ansible_all_ipv4_addresses'] %}
+{{line}}
+{% endfor %}
 
 {% endfor %}
