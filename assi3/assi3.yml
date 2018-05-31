@@ -1,0 +1,30 @@
+---
+- name: Prepare config & apply to Edge R1
+  hosts: r1.lab.esxi
+  strategy: debug
+  vars:
+    - temp: temp
+    - results: results 
+  tasks:
+    - file: path={{temp}} state=absent
+      run_once: true
+    - file: path={{temp}} state=directory
+      run_once: true
+    - template: src="tp-inetpro.j2" dest="{{temp}}/{{inventory_hostname}}.txt"
+      run_once: true
+    - local_action: >
+         command /usr/bin/sshpass -p {{ansible_ssh_pass}} /usr/bin/scp {{temp}}/{{inventory_hostname}}.txt {{ansible_user}}@{{inventory_hostname}}:flash:candidate.cfg
+    - ios_config: 
+         lines:
+            - file prompt quiet
+    - ios_command: 
+         commands:
+            - copy candidate.cfg running-config
+            - copy running-config start
+         timeout: 30
+         authorize: yes
+      register: output1
+    - ios_config: 
+         lines:
+            - file prompt alert
+         authorize: yes
