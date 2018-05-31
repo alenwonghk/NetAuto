@@ -1,3 +1,4 @@
+
 int g1.2001
  en dot 2001
  desc Customer T1000001-C100000001
@@ -10,4 +11,20 @@ router bgp 200
  neighbor 104.224.0.2 remote-as 456
  neighbor 104.224.0.2 next-hop-self
  neighbor 104.224.0.2 description T1000001-C100000001
- neighbor 104.224.0.2 prefix-list E1000001-C100000001-prefix in
+ neighbor 104.224.0.2 prefix-list T1000001-C100000001-prefix in
+ 
+
+int g1.2002
+ en dot 2002
+ desc Customer T1000002-C100000001
+ ip add 104.224.0.5 255.255.255.252
+ 
+ip prefix-list T1000002-C100000001-prefix seq 10 permit 77.102.108.0/24
+
+router bgp 200
+ network  255.255.255.252
+ neighbor 104.224.0.6 remote-as 1400
+ neighbor 104.224.0.6 next-hop-self
+ neighbor 104.224.0.6 description T1000002-C100000001
+ neighbor 104.224.0.6 prefix-list T1000002-C100000001-prefix in
+ 

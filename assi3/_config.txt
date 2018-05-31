@@ -28,7 +28,13 @@ router bgp 200
  neighbor {{neighborIP}} prefix-list {{custID}}-{{custCircuitID}}-prefix in
 
 
+To allow SCP:
+ip scp server enable
+aaa authorization exec default local none 
 
+To turn off the file prompt operation:
+file prompt quiet
+file prompt alert
 
 int g1.2001
  en dot 2001 

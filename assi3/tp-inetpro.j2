@@ -1,18 +1,22 @@
-int g1.{{subInf}}
- en dot {{subInf}}
- desc Customer T{{custID}}-C{{custCircuitID}}
- ip add {{ handOffPrefix|ipaddr('1')|ipaddr('address') }} {{handOffPrefix|ipaddr('netmask') }}
+{% for cust in customers %}
+
+int g1.{{cust.subInf}}
+ en dot {{cust.subInf}}
+ desc Customer T{{cust.ID}}-C{{cust.circuitID}}
+ ip add {{ cust.handOffPrefix|ipaddr('1')|ipaddr('address') }} {{cust.handOffPrefix|ipaddr('netmask') }}
  
 {% set count = 10 %}
-{% for prefix in custPrefixList %}
-ip prefix-list T{{custID}}-C{{custCircuitID}}-prefix seq {{count}} permit {{prefix}}
+{% for prefix in cust.prefixList %}
+ip prefix-list T{{cust.ID}}-C{{cust.circuitID}}-prefix seq {{count}} permit {{prefix}}
 {% set count = count + 10 %}
 {% endfor %}
 
-{% set neighborIP = handOffPrefix|ipaddr('2')|ipaddr('address') %}
-router bgp 200
- network {{handOffPrefix|ipaddr('address')}} {{handOffPrefix|ipaddr('netmask')}}
- neighbor {{neighborIP}} remote-as {{custAS}}
+{% set neighborIP = cust.handOffPrefix|ipaddr('2')|ipaddr('address') %}
+router bgp {{edgeAS}}
+ network {{cust.handOffPrefix|ipaddr('address')}} {{cust.handOffPrefix|ipaddr('netmask')}}
+ neighbor {{neighborIP}} remote-as {{cust.AS}}
  neighbor {{neighborIP}} next-hop-self
- neighbor {{neighborIP}} description T{{custID}}-C{{custCircuitID}}
- neighbor {{neighborIP}} prefix-list E{{custID}}-C{{custCircuitID}}-prefix in
+ neighbor {{neighborIP}} description T{{cust.ID}}-C{{cust.circuitID}}
+ neighbor {{neighborIP}} prefix-list T{{cust.ID}}-C{{cust.circuitID}}-prefix in
+ 
+{%endfor%}
