@@ -1,0 +1,17 @@
+---
+- name: Collect devices in lab environment
+  hosts: all
+  vars:
+    - temp: temp
+  tasks:
+    - file: path={{temp}} state=absent
+      run_once: true
+    - file: path={{temp}} state=directory
+      run_once: true
+    - snmp_facts:
+        host: "{{ansible_host}}"
+        version: v2
+        community: cisco
+    - copy:
+        content="{{hostvars[inventory_hostname]|to_nice_yaml(indent=4)}}" 
+        dest={{temp}}/{{inventory_hostname}}.yml

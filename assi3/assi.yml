@@ -1,0 +1,35 @@
+---
+- name: Collect devices in lab environment
+  hosts: all
+  vars:
+    - temp: temp
+  tasks:
+    - file: path={{temp}} state=absent
+      run_once: true
+    - file: path={{temp}} state=directory
+      run_once: true
+    - snmp_facts:
+        host: "{{ansible_host}}"
+        version: v2
+        community: cisco
+    - copy:
+        content="{{hostvars[inventory_hostname]|to_nice_yaml(indent=4)}}" 
+        dest={{temp}}/{{inventory_hostname}}.yml
+
+- name: Report generation
+  hosts: all
+  vars:
+    - results: results 
+    - temp: temp
+  tasks:
+    - include_vars: "{{temp}}/{{inventory_hostname}}.yml"
+    - file: path="{{results}}" state=absent
+      run_once: true
+    - file: path="{{results}}" state=directory
+      run_once: true
+    - file: path="{{results}}/report.txt" state=touch
+      run_once: true
+    - template: src="tp-report.j2" dest="{{results}}/report.txt"
+      vars:
+        allhosts: "{{hostvars}}"
+      run_once: true
