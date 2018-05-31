@@ -1,0 +1,14 @@
+---
+- name: Prepare config to be applied to Edge R1
+  hosts: all
+  strategy: debug
+  vars:
+    - temp: temp
+    - results: results 
+  tasks:
+    - file: path={{temp}} state=absent
+      run_once: true
+    - file: path={{temp}} state=directory
+      run_once: true
+    - template: src="tp-inetpro.j2" dest="{{temp}}/{{inventory_hostname}}.txt"
+      run_once: true

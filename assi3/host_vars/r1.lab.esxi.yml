@@ -1,0 +1,8 @@
+---
+subInf: 2001
+custID: 1000001
+custCircuitID: 100000001
+custAS: 456
+custPrefixList:
+ - 87.237.1.0/24
+handOffPrefix: 104.224.0.0/30

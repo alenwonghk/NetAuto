@@ -1,0 +1,18 @@
+int g1.{{subInf}}
+ en dot {{subInf}}
+ desc Customer T{{custID}}-C{{custCircuitID}}
+ ip add {{ handOffPrefix|ipaddr('1')|ipaddr('address') }} {{handOffPrefix|ipaddr('netmask') }}
+ 
+{% set count = 10 %}
+{% for prefix in custPrefixList %}
+ip prefix-list T{{custID}}-C{{custCircuitID}}-prefix seq {{count}} permit {{prefix}}
+{% set count = count + 10 %}
+{% endfor %}
+
+{% set neighborIP = handOffPrefix|ipaddr('2')|ipaddr('address') %}
+router bgp 200
+ network {{handOffPrefix|ipaddr('address')}} {{handOffPrefix|ipaddr('netmask')}}
+ neighbor {{neighborIP}} remote-as {{custAS}}
+ neighbor {{neighborIP}} next-hop-self
+ neighbor {{neighborIP}} description T{{custID}}-C{{custCircuitID}}
+ neighbor {{neighborIP}} prefix-list E{{custID}}-C{{custCircuitID}}-prefix in

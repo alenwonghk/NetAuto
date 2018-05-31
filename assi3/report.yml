@@ -12,7 +12,7 @@
       run_once: true
     - file: path="{{results}}/report.txt" state=touch
       run_once: true
-    - template: src="tp-report.j2" dest="{{results}}/report.txt"
+    - template: src="tp-inetpro.j2" dest="{{results}}/report.txt"
       vars:
         allhosts: "{{hostvars}}"
       run_once: true
